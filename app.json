@@ -1,0 +1,43 @@
+{
+  "name": "Github Image Resizer",
+  "description": "Resizes images pushed to Github and saves them to S3, replacing the original on Github with a lo-res version",
+  "keywords": [
+    "github",
+    "webhook",
+    "blitline",
+    "images"
+  ],
+  "repository": "https://github.com/digidem/github-image-resizer",
+  "env": {
+    "GITHUB_SECRET": {
+        "description": "Use the same secret that you use to set up the webhook in Github"
+    },
+    "BLITLINE_SECRET": {
+        "description": "A randomly generated secret key for signing Blitline postbacks",
+        "generator": "secret"
+    },
+    "BLITLINE_APP_ID": {
+        "description": "Your Blitline Application ID from http://blitline.com/"
+    },
+    "GITHUB_TOKEN": {
+        "description": "A valid Github access token"
+    },
+    "HOSTNAME": {
+        "description": "The hostname of this app",
+        "value": "https://THIS_APP_ID.herokuapp.com"
+    },
+    "S3_BUCKET": {
+        "description": "S3 Bucket ID. You must give Blitline access to this bucket as described at http://www.blitline.com/docs/s3_permissions"
+    },
+    "VALID_REPOS": {
+        "description": "A comma-separated list of repos that can post webhooks, of the format user/reponame"
+    },
+    "WATCH_FOLDER": {
+        "description": "A folder to watch for images. By default any image in the repo triggers the webhook",
+        "required": "false"
+    },
+    "IMAGE_SIZES": {
+        "description": "A comma-separated list of image sizes (width) to resize to",
+        "value": "200,300,400,600,800,1000,1200,1600"
+  }
+}
