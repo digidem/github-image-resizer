@@ -1,0 +1,24 @@
+{
+  "results": {
+    "original_meta": {
+      "width": 2048,
+      "height": 1282
+    },
+    "images": [{
+      "image_identifier": "assets/15103964698_67fae4c535_k_d-500.jpg",
+      "s3_url": "http://digidem-test.s3.amazonaws.com/assets/15103964698_67fae4c535_k_d-500.jpg",
+      "meta": {
+        "width": 500,
+        "height": 313
+      }
+    }, {
+      "image_identifier": "assets/15103964698_67fae4c535_k_d-1000.jpg",
+      "s3_url": "http://digidem-test.s3.amazonaws.com/assets/15103964698_67fae4c535_k_d-1000.jpg",
+      "meta": {
+        "width": 1000,
+        "height": 626
+      }
+    }],
+    "job_id": "986ACGB5mJZnfhHcDgjBscA"
+  }
+}

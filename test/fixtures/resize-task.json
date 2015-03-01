@@ -1,0 +1,11 @@
+{
+    "images": [
+        "https://github.com/digidem-test/test/raw/master/assets/14459663821_329233b70e_k_d.jpg",
+        "https://github.com/digidem-test/test/raw/master/assets/15103964698_67fae4c535_k_d.jpg"
+    ],
+    "sizes": [200, 800, 1200],
+    "postbackHeaders": {
+        "x-blitline-origin-repo": "digidem-test/test",
+        "x-blitline-origin-branch": "master"
+    }
+}

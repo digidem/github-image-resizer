@@ -1,6 +1,6 @@
 var bodyParser = require('body-parser');
 
-module.exports = function(options) {
+function verifyBlitlineWebhook(options) {
   if (typeof options != 'object')
     throw new TypeError('must provide an options object');
 
@@ -29,6 +29,9 @@ module.exports = function(options) {
         req.body.results = req.body[':results'];
         delete req.body[':results'];
       }
+
+      if (!req.body.results) next(err);
+
       for (var key in req.body.results) {
         if (key.slice(0,1) === ':') {
           req.body.results[key.slice(1)] = req.body.results[key];
@@ -39,4 +42,6 @@ module.exports = function(options) {
       next();
     });
   };
-};
+}
+
+module.exports = verifyBlitlineWebhook;
