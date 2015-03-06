@@ -1,4 +1,5 @@
-var Github  = require('github-api');
+var Octokat  = require('octokat');
+var Hubfs = require('hubfs.js');
 var debug = require('debug')('image-resizer:copy-to-github');
 
 var request = require('request').defaults({
@@ -9,36 +10,42 @@ var request = require('request').defaults({
 });
 
 /**
- * Downloads a file from `options.url` and writes it to github repo
- * `options.repo` with filename `options.filename`
+ * Downloads a file from `task.url` and writes it to github repo
+ * `task.repo` with filename `task.filename`
  * @private
- * @param {Object} options
- * @param {String} options.url url for the file to copy
- * @param {String} options.filename filename (and path e.g.
+ * @param {Object} task
+ * @param {String} task.url url for the file to copy
+ * @param {String} task.filename filename (and path e.g.
  * `/my_folder/my_file.txt`) to save on Github
- * @param {String} options.repo Github full repo name with slash `user/repo`
+ * @param {String} task.repo Github full repo name with slash `user/repo`
  * @param {Function} callback called with (err)
  */
-function copyToGithub(options, callback) {
-  var github  = new Github({
-    token: options.token || process.env.GITHUB_TOKEN,
-    auth: "oauth"
+function copyToGithub(task, callback) {
+  var octo  = new Octokat({
+    token: task.token || process.env.GITHUB_TOKEN
   });
 
-  var repo = github.getRepo(options.repo.split('/')[0], options.repo.split('/')[1]);
-  var branch = options.branch || master;
-  var commitMsg = (options.commitPrefix || '') + 'Updating file ' + options.filename;
+  var repo = octo.repos(task.repo.split('/')[0], task.repo.split('/')[1]);
+  var hubfs = new Hubfs(repo);
+  var branch = task.branch || 'master';
+  var commitMsg = (task.commitPrefix || '') + 'Updating file ' + task.filename;
 
-  debug('getting image:', options.url);
+  debug('getting image:', task.url);
 
-  request.get(options.url, onGetFile);
+  request.get(task.url, onGetFile);
 
   function onGetFile(err, response, data) {
     if (err) return callback(err);
-    debug('writing resized image to repo %s branch %s', options.repo, branch);
-    repo.write(branch, options.filename, data, commitMsg, function(err) {
+    debug('writing resized image to repo %s branch %s', task.repo, branch);
+
+    var writeOptions = {
+      message: commitMsg,
+      branch: branch
+    };
+
+    hubfs.writeFile(task.filename, data, writeOptions, function(err) {
       if (err) return callback(err);
-      debug('Written file %s to Github', options.filename);
+      debug('Wrote file %s to Github', task.filename);
       callback();
     });
   }
