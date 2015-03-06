@@ -3,11 +3,15 @@ var queue = require('async').queue;
 module.exports = function(options) {
   options = options || {};
 
+  // This makes it easier to mock, not sure this is the prettiest way to do this.
   var copyToGithub = options.copyToGithub || require('../helpers/copy-to-github');
 
+  // We copy files to Github one at a time, otherwise we loose where our HEAD is
+  // and we get problems.
   var q = queue(copyToGithub, 1);
 
   return function blitlineWebhookResponder(req, res) {
+    // These headers are set in the task sent to Blitline.
     var repo = req.headers['x-blitline-origin-repo'];
     var branch = req.headers['x-blitline-origin-branch'];
     var results = req.body.results;

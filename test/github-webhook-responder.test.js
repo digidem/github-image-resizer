@@ -23,7 +23,7 @@ test('Only responds to github push events', function(t) {
         .set('x-github-event', 'ping')
         .send(payload)
         .expect(200, '')
-        .end(function(err, res) {
+        .end(function(err) {
             t.error(err, 'ignores ping payload');
             t.end();
         });
@@ -37,7 +37,7 @@ test('Rejects webhooks from unauthorized repos', function(t) {
         .set('x-github-event', 'push')
         .send(payload)
         .expect(403, 'Not authorised for this repo')
-        .end(function(err, res) {
+        .end(function(err) {
             t.error(err, 'Sent 403');
             t.end();
         });
@@ -51,7 +51,7 @@ test('Only responds to push events on master branch if webhook is on root url', 
         .set('x-github-event', 'push')
         .send(payload)
         .expect(200, 'branch patch does not match, ignoring')
-        .end(function(err, res) {
+        .end(function(err) {
             t.error(err, 'ignores push payload on patch branch');
             t.end();
         });
@@ -65,7 +65,7 @@ test('Only responds to push events on branch specified in url', function(t) {
         .set('x-github-event', 'push')
         .send(payload)
         .expect(200, 'branch master does not match, ignoring')
-        .end(function(err, res) {
+        .end(function(err) {
             t.error(err, 'ignores push payload on master branch when url is /patch');
             t.end();
         });
@@ -79,7 +79,7 @@ test('Ignores push events with no files matching imageRegExp', function(t) {
         .set('x-github-event', 'push')
         .send(payload)
         .expect(200, 'No updated images detected')
-        .end(function(err, res) {
+        .end(function(err) {
             t.error(err, 'ignores push with no images');
             t.end();
         });
@@ -93,7 +93,7 @@ test('Ignores push events with images not in watch folder', function(t) {
         .set('x-github-event', 'push')
         .send(payload)
         .expect(200, 'No updated images detected')
-        .end(function(err, res) {
+        .end(function(err) {
             t.error(err, 'ignored');
             t.end();
         });
@@ -107,7 +107,7 @@ test('Ignores commits with prefix', function(t) {
         .set('x-github-event', 'push')
         .send(payload)
         .expect(200, 'No updated images detected')
-        .end(function(err, res) {
+        .end(function(err) {
             t.error(err, 'ignored');
             t.end();
         });
@@ -140,7 +140,7 @@ test('Calls resizer with valid resize task', function(t) {
         .set('x-github-event', 'push')
         .send(payload)
         .expect(202, '')
-        .end(function(err, res) {
+        .end(function(err) {
             t.error(err, 'Got 202 response');
         });
 });

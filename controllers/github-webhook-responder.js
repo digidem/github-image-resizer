@@ -52,7 +52,7 @@ module.exports = function(options) {
       debug('branch %s does not match, ignoring', branch);
       return res.status(200).send('branch ' + branch + ' does not match, ignoring');
     }
-    
+
     if (!files.length) {
       debug('No updated images detected');
       return res.status(200).end('No updated images detected');

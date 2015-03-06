@@ -8,7 +8,7 @@ function verifyBlitlineWebhook(options) {
     throw new TypeError('must provide a \'secret\' option');
 
   var jsonParser = bodyParser.json({
-    verify: function(req, res, buffer) {
+    verify: function(req) {
       var sig = req.headers['x-blitline-signature'];
 
       if (!sig)

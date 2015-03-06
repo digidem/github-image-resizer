@@ -4,7 +4,6 @@ var createImageSizeStream = require('image-size-stream');
 var Octokat = require('octokat');
 var dotenv = require('dotenv');
 var ngrok = require('ngrok');
-var bufferEqual = require('buffer-equal');
 
 dotenv.load();
 
@@ -25,7 +24,7 @@ var octo = new Octokat({
   token: process.env.GITHUB_TOKEN
 });
 
-var hostname, testImage;
+var hostname, testImage, server;
 
 function setup() {
     test('setup server', function(t) {
@@ -82,8 +81,8 @@ test('New image on Github is resized', function(t) {
             message: 'Add image to repo',
             content: testImage.toString('base64')
         }, st.pass);
-        t.skip('Waiting 10 seconds for everything to process');
-        setTimeout(t.end, 10000);
+        t.skip('Waiting 20 seconds for everything to process');
+        setTimeout(t.end, 20000);
     });
     t.test('Check resized image is on Github', function(st) {
         var imageSizeStream = createImageSizeStream();
