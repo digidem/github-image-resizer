@@ -8,8 +8,9 @@
     "github"
   ],
   "scripts": {
-    "test": "tape test/*.js | tap-spec",
-    "coverage": "istanbul cover tape -- test/**/*.test.js"
+    "test": "jshint **/*.js && tape test/*.js | tap-spec",
+    "coverage": "istanbul cover tape -- test/**/*.test.js",
+    "start": "node server.js"
   },
   "license": "MIT",
   "dependencies": {
@@ -17,13 +18,14 @@
     "blitline-resizer": "~0.2.1",
     "body-parser": "^1.10.0",
     "debug": "^2.1.0",
+    "defaults": "^1.0.0",
     "express": "^4.10.4",
-    "github-api": "gmaclennan/github",
     "github-webhook-middleware": "~0.0.2",
+    "hubfs.js": "~0.0.3",
+    "octokat": "^0.4.7",
     "parse-github-payload": "^0.1.0",
     "request": "^2.49.0",
-    "defaults": "^1.0.0",
-    "simple_blitline_node": "gmaclennan/simple_blitline_node"
+    "simple_blitline_node": "git+https://github.com/gmaclennan/simple_blitline_node"
   },
   "devDependencies": {
     "body-parser": "^1.12.0",
@@ -33,10 +35,21 @@
     "istanbul": "^0.3.6",
     "jshint": "^2.6.3",
     "ngrok": "^0.1.99",
-    "octokat": "^0.4.6",
     "supertest": "^0.15.0",
     "tap-prettify": "0.0.2",
     "tap-spec": "^2.2.2",
     "tape": "^3.5.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/digidem/github-image-resizer.git"
+  },
+  "author": "Gregor MacLennan",
+  "bugs": {
+    "url": "https://github.com/digidem/github-image-resizer/issues"
+  },
+  "homepage": "https://github.com/digidem/github-image-resizer"
 }
