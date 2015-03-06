@@ -16,10 +16,11 @@ var defaultOptions = {
 module.exports = function(options) {
   options = defaults(options, defaultOptions);
 
-  if (options.watchFolder.length && !/\/$/.test(options.watchFolder)) {
-    options.watchFolder += '/';
+  if (options.watchFolder.length) {
+    // add trailing slash if it is missing
+    options.watchFolder += /\/$/.test(options.watchFolder) ? '' : '/';
     // remove preceding slash
-    options.watchFolder.replace(/^\//, '');
+    options.watchFolder = options.watchFolder.replace(/^\//, '');
   }
 
   var fileRe = new RegExp(options.watchFolder + options.imageRe.source);
