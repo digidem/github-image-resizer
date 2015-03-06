@@ -10,7 +10,8 @@
   "repository": "https://github.com/digidem/github-image-resizer",
   "env": {
     "GITHUB_SECRET": {
-        "description": "Use the same secret that you use to set up the webhook in Github"
+        "description": "Use the same secret for the webhook in Github",
+        "generator": "secret"
     },
     "BLITLINE_SECRET": {
         "description": "A randomly generated secret key for signing Blitline postbacks",
@@ -39,5 +40,6 @@
     "IMAGE_SIZES": {
         "description": "A comma-separated list of image sizes (width) to resize to",
         "value": "200,300,400,600,800,1000,1200,1600"
+    }
   }
 }
