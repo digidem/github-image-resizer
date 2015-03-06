@@ -1,6 +1,6 @@
 {
   "name": "github-image-resizer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Resizes images pushed to Github and saves them to S3, replacing the original on Github with a lo-res version",
   "main": "app.js",
   "keywords": [
