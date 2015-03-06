@@ -16,6 +16,9 @@ function verifyBlitlineWebhook(options) {
 
       if (sig !== options.secret)
         throw new Error('X-Blitline-Signature does not match secret');
+
+      if (!req.headers['x-blitline-origin-repo'] || !req.headers['x-blitline-origin-branch'])
+        throw new Error('x-blitline-origin-repo or x-blitline-origin-branch not set');
     }
   });
 
