@@ -1,5 +1,7 @@
 # github-image-resizer
 
+[![Build Status](https://travis-ci.org/digidem/github-image-resizer.svg?branch=master)](https://travis-ci.org/digidem/github-image-resizer)
+
 Resizes images pushed to Github and saves them to S3, replacing the original on Github with a lo-res version
 
 ## Why?
