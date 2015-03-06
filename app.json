@@ -10,8 +10,7 @@
   "repository": "https://github.com/digidem/github-image-resizer",
   "env": {
     "GITHUB_SECRET": {
-        "description": "Use the same secret for the webhook in Github",
-        "generator": "secret"
+        "description": "Use the same secret for the webhook in Github. Any random string will do"
     },
     "BLITLINE_SECRET": {
         "description": "A randomly generated secret key for signing Blitline postbacks",
@@ -24,8 +23,7 @@
         "description": "A valid Github access token"
     },
     "HOSTNAME": {
-        "description": "The hostname of this app",
-        "value": "https://THIS_APP_ID.herokuapp.com"
+        "description": "The hostname of this app e.g. https://THIS_APP_ID.herokuapp.com"
     },
     "S3_BUCKET": {
         "description": "S3 Bucket ID. You must give Blitline access to this bucket as described at http://www.blitline.com/docs/s3_permissions"
@@ -35,7 +33,7 @@
     },
     "WATCH_FOLDER": {
         "description": "A folder to watch for images. By default any image in the repo triggers the webhook",
-        "required": "false"
+        "required": false
     },
     "IMAGE_SIZES": {
         "description": "A comma-separated list of image sizes (width) to resize to",
