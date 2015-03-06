@@ -22,7 +22,7 @@ Our solution is to convert each image to multiple sizes when we first upload it,
 
 4. Deploy this server to Heroku by clicking the button below. Copy the `GITHUB_SECRET` - you will need that for setting up the Github webhook.
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+    [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 5. [Create a webhook](https://developer.github.com/webhooks/creating/) on your Github repo. Payload Url should be `https://YOUR_APP_ID.herokuapp.com`, Content Type should be `application/json`, Secret should be the same as the `GITHUB_SECRET` environment variable on your Heroku App. You should just send the `push` event. Set your webhook to active.
 
