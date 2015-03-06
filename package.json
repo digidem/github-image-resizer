@@ -22,6 +22,7 @@
     "express": "^4.10.4",
     "github-webhook-middleware": "~0.0.2",
     "hubfs.js": "~0.0.3",
+    "newrelic": "^1.17.1",
     "octokat": "^0.4.7",
     "parse-github-payload": "^0.1.0",
     "request": "^2.49.0",

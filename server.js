@@ -1,3 +1,4 @@
+require('newrelic');
 var app = require('./app');
 
 // Start server
