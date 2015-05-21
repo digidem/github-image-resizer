@@ -9,7 +9,7 @@ dotenv.load();
 
 var tempRepo = 'test' + Date.now();
 
-process.env.S3_BUCKET = 'digidem-test';
+var bucket = process.env.S3_BUCKET = 'digidem-test';
 process.env.VALID_REPOS = 'digidem-test/' + tempRepo;
 process.env.WATCH_FOLDER = 'assets';
 process.env.IMAGE_SIZES = [200,600,1600];
@@ -93,6 +93,16 @@ test('New image on Github is resized', function(t) {
         });
 
         request('https://github.com/digidem-test/' + tempRepo + '/raw/master/assets/test-image.jpg').pipe(imageSizeStream);
+    });
+    t.test('Creates retina version of image', function(st) {
+        var imageSizeStream = createImageSizeStream();
+
+        imageSizeStream.on('size', function(dimensions) {
+            st.equal(dimensions.width, 400, 'retina version is correct size');
+            st.end();
+        }).on('error', t.end);
+
+        request('https://s3.amazonaws.com/' + bucket + '/assets/test-image-200@2x.jpg').pipe(imageSizeStream);
     });
 });
 

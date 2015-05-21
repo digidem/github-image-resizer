@@ -67,6 +67,7 @@ module.exports = function(options) {
     });
 
     var resizeTask = {
+      retina: true,
       images: files,
       sizes: options.sizes,
       postbackHeaders: {
