@@ -4,6 +4,7 @@ var createImageSizeStream = require('image-size-stream');
 var Octokat = require('octokat');
 var dotenv = require('dotenv');
 var ngrok = require('ngrok');
+var knox = require('knox');
 
 dotenv.load();
 
@@ -70,6 +71,24 @@ function teardown() {
     });
     test('Delete temporary test repo', function(t) {
         octo.repos('digidem-test', tempRepo).remove(t.end);
+    });
+    test('Delete files from s3 temp bucket', function(t) {
+        var client = knox.createClient({
+            key: process.env.S3_KEY,
+            secret: process.env.S3_SECRET,
+            bucket: bucket
+        });
+        client.list(function(err, data) {
+            if (err) return t.end(err);
+            var keys = data.Contents.map(function(v) {
+                return v.Key;
+            });
+            client.deleteMultiple(keys, function(err, res) {
+                if (err) return t.end(err);
+                res.resume();
+                t.end();
+            });
+        });
     });
 }
 
