@@ -100,8 +100,8 @@ test('New image on Github is resized', function(t) {
             message: 'Add image to repo',
             content: testImage.toString('base64')
         }, st.pass);
-        t.skip('Waiting 20 seconds for everything to process');
-        setTimeout(t.end, 20000);
+        st.skip('Waiting 20 seconds for everything to process');
+        setTimeout(st.end, 20000);
     });
     t.test('Check resized image is on Github', function(st) {
         var imageSizeStream = createImageSizeStream();
@@ -119,10 +119,11 @@ test('New image on Github is resized', function(t) {
         imageSizeStream.on('size', function(dimensions) {
             st.equal(dimensions.width, 400, 'retina version is correct size');
             st.end();
-        }).on('error', t.end);
+        }).on('error', st.end);
 
         request('https://s3.amazonaws.com/' + bucket + '/assets/test-image-200@2x.jpg').pipe(imageSizeStream);
     });
+    t.end();
 });
 
 teardown();
