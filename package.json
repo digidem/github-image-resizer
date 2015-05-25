@@ -8,7 +8,7 @@
     "github"
   ],
   "scripts": {
-    "test": "jshint **/*.js && tape test/*.js | tap-spec",
+    "test": "jshint --exclude=node_modules/* **/*.js && tape test/*.js | tap-spec",
     "coverage": "istanbul cover tape -- test/**/*.test.js",
     "start": "node server.js"
   },
