@@ -14,7 +14,7 @@ var octo = new Octokat({
 var tempRepo = 'test' + Date.now();
 
 var testFile = {
-    url: 'https://s3.amazonaws.com/digidem-test/logo.png'
+    url: 'http://images.digital-democracy.org/logos/logo-hivos.jpg'
 };
 
 function setup() {
@@ -51,6 +51,7 @@ test('Copies file from url to github', function(t) {
     copyToGithub(copyTask, function(err) {
         t.error(err);
         octo.repos('digidem-test', tempRepo).contents('folder/logo.png').fetch(function(err, info) {
+            t.error(err);
             t.ok(bufferEqual(new Buffer(info.content, 'base64'), testFile.content), 'file in github matches original');
             t.end();
         });
