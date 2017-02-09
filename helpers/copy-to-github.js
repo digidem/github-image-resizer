@@ -21,12 +21,15 @@ var request = require('request').defaults({
  * @param {Function} callback called with (err)
  */
 function copyToGithub(task, callback) {
-  var octo  = new Octokat({
-    token: task.token || process.env.GITHUB_TOKEN
-  });
+  var opts = {
+    auth: {
+      token: task.token || process.env.GITHUB_TOKEN
+    },
+    owner: task.repo.split('/')[0],
+    repo: task.repo.split('/')[1]
+  };
 
-  var repo = octo.repos(task.repo.split('/')[0], task.repo.split('/')[1]);
-  var hubfs = new Hubfs(repo);
+  var hubfs = new Hubfs(opts);
   var branch = task.branch || 'master';
   var commitMsg = (task.commitPrefix || '') + 'Updating file ' + task.filename;
 
