@@ -22,10 +22,11 @@
     "express": "^4.14.1",
     "github-webhook-middleware": "~0.0.2",
     "hubfs.js": "~1.0.0",
-    "newrelic": "^1.36.2",
     "octokat": "^0.6.2",
     "parse-github-payload": "^0.1.1",
+    "queue": "^4.2.1",
     "request": "^2.79.0",
+    "run-series": "^1.1.4",
     "simple_blitline_node": "git+https://github.com/gmaclennan/simple_blitline_node"
   },
   "devDependencies": {
@@ -37,6 +38,7 @@
     "jshint": "^2.9.4",
     "knox": "^0.9.2",
     "ngrok": "^2.2.6",
+    "standard": "^9.0.2",
     "supertest": "^3.0.0",
     "tap-prettify": "0.0.2",
     "tap-spec": "^4.1.1",

@@ -1,10 +1,8 @@
-var express = require('express');
-var app     = express();
+var express = require('express')
+var app = express()
 
-var githubWebhook = require('./routes/github-webhook');
-var blitlineWebhook = require('./routes/blitline-webhook');
+var githubWebhook = require('./routes/github-webhook')
 
-app.use('/hooks/github', githubWebhook);
-app.use('/hooks/blitline', blitlineWebhook);
+app.use('/hooks/github', githubWebhook)
 
-module.exports = app;
+module.exports = app
