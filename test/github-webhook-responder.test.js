@@ -1,9 +1,12 @@
 var express = require('express')
-var GithubWebhookResponder = require('../controllers/github-webhook-responder')
 var request = require('supertest')
 var test = require('tape')
 var bodyParser = require('body-parser')
 var app = express()
+
+process.env.S3_BUCKET = 'digidem-test'
+
+var GithubWebhookResponder = require('../controllers/github-webhook-responder')
 
 var options = {
   watchFolder: 'assets',
@@ -115,15 +118,19 @@ test('Ignores commits with prefix', function (t) {
 
 test('Calls resizer with valid resize task', function (t) {
   var payload = require('./fixtures/github-payloads/push-payload.json')
-  var resizeTask = require('./fixtures/resize-task.json')
-
+  var filenames = ['assets/15103964698_67fae4c535_k_d.jpg', 'assets/14459663821_329233b70e_k_d.jpg']
   var app = express()
+
+  t.plan(11)
 
   var options = {
     watchFolder: 'assets',
     validRepos: 'digidem-test/test',
-    resizer: function (task, cb) {
-      t.deepEqual(task, resizeTask, 'valid task')
+    resize: function (filename, repo, bucketName, options, cb) {
+      t.equal(filename, filenames.pop(), 'resize called with correct filename')
+      t.equal(repo, 'digidem-test/test', 'resize called with correct repo')
+      t.equal(bucketName, 'digidem-test', 'resize called with correct bucker')
+      t.deepEqual(options, {sizes: options.sizes, branch: 'master'}, 'valid options')
       t.equal(typeof cb, 'function', 'called resizer with callback')
     },
     sizes: [ 200, 800, 1200 ]
@@ -132,8 +139,6 @@ test('Calls resizer with valid resize task', function (t) {
   app.use(bodyParser.json())
 
   app.post('/*', GithubWebhookResponder(options))
-
-  t.plan(3)
 
   request(app)
         .post('/')

@@ -4,6 +4,8 @@ var request = require('request')
 var Octokat = require('octokat')
 var dotenv = require('dotenv')
 var bufferEqual = require('buffer-equal')
+var tmp = require('tmp')
+var fs = require('fs')
 
 dotenv.load()
 
@@ -14,16 +16,19 @@ var octo = new Octokat({
 var tempRepo = 'test' + Date.now()
 
 var testFile = {
-  url: 'http://images.digital-democracy.org/logos/logo-hivos.jpg'
+  url: 'http://images.digital-democracy.org/logos/logo-hivos.jpg',
+  tmpPath: tmp.tmpNameSync()
 }
 
 function setup () {
   test('Create temporary test repo', function (t) {
-    octo.user.repos.create({ name: tempRepo, auto_init: true }, t.end)
+    t.plan(1)
+    octo.user.repos.create({ name: tempRepo, auto_init: true }, t.error)
   })
   test('Get test file contents', function (t) {
     request({ url: testFile.url, encoding: null }, function (err, res, body) {
       t.error(err)
+      fs.writeFileSync(testFile.tmpPath, body)
       testFile.content = body
       t.end()
     })
@@ -43,16 +48,16 @@ test('Copies file from url to github', function (t) {
     repo: 'digidem-test/' + tempRepo,
     branch: 'master',
     commitPrefix: '[RESIZE-WEBHOOK] ',
-    filename: 'folder/logo.png',
-    url: testFile.url,
+    destPath: 'folder/logo.png',
+    localPath: testFile.tmpPath,
     token: process.env.GITHUB_TOKEN
   }
 
   copyToGithub(copyTask, function (err) {
     t.error(err)
-    octo.repos('digidem-test', tempRepo).contents('folder/logo.png').fetch(function (err, info) {
+    octo.repos('digidem-test', tempRepo).contents(copyTask.destPath).fetch(function (err, info) {
       t.error(err)
-      t.ok(bufferEqual(new Buffer(info.content, 'base64'), testFile.content), 'file in github matches original')
+      t.ok(bufferEqual(Buffer.from(info.content, 'base64'), testFile.content), 'file in github matches original')
       t.end()
     })
   })

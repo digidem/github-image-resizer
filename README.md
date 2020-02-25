@@ -16,23 +16,19 @@ Our solution is to convert each image to multiple sizes when we first upload it,
 
 ## Installation
 
-1. Setup an account with [Blitline](http://www.blitline.com/) which is free for 2hrs of processing a month, which is a lot of resizing images.
+1. Create an [Amazon S3 bucket](http://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html) for your images.
 
-2. Create an [Amazon S3 bucket](http://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html) for your images.
-
-3. Make sure [Blitline has permissions](https://www.blitline.com/docs/s3_permissions) to write to your S3 bucket.
-
-4. Deploy this server to Heroku by clicking the button below. Copy the `GITHUB_SECRET` - you will need that for setting up the Github webhook.
+2. Deploy this server to Heroku by clicking the button below. Copy the `GITHUB_SECRET` - you will need that for setting up the Github webhook.
 
     [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
-5. [Create a webhook](https://developer.github.com/webhooks/creating/) on your Github repo. Payload Url should be `https://YOUR_APP_ID.herokuapp.com`, Content Type should be `application/json`, Secret should be the same as the `GITHUB_SECRET` environment variable on your Heroku App. You should just send the `push` event. Set your webhook to active.
+3. [Create a webhook](https://developer.github.com/webhooks/creating/) on your Github repo. Payload Url should be `https://YOUR_APP_ID.herokuapp.com`, Content Type should be `application/json`, Secret should be the same as the `GITHUB_SECRET` environment variable on your Heroku App. You should just send the `push` event. Set your webhook to active.
 
 That's it (what do you mean "that's it"? that's a whole bunch of work!). When you make a push to Github that includes an image that matches `/.+\.(jpg|jpeg|png|tif|tiff|gif)$/` then you will get a bunch of different sized images in your S3 bucket, and the original will be replaced with a lo-res version in your repo.
 
 ## Testing
 
-You will need to set a `BLITLINE_APP_ID` environment variable and a `GITHUB_TOKEN` for a testing account. Tests will create a temporary repo (named `temp` + current date stamp) and then delete it after tests complete.
+You will need to set a `GITHUB_TOKEN` for a testing account. Tests will create a temporary repo (named `temp` + current date stamp) and then delete it after tests complete.
 
 ```sh
 npm install

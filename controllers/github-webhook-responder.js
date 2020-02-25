@@ -1,16 +1,17 @@
 var parsePayload = require('parse-github-payload')
 var defaults = require('defaults')
 var debug = require('debug')('image-resizer:github-webhook')
-var blitelineResizer = require('blitline-resizer')
 
-var createRenameFn = require('../helpers/github-image-renamer')
+require('dotenv').config()
 
 var defaultOptions = {
   watchFolder: process.env.WATCH_FOLDER || '',
-  imageRe: /.+\.(jpg|jpeg|png|tif|tiff|gif)$/,
+  imageRe: /.+\.(jpg|jpeg|png|tif|tiff)$/,
   sizes: process.env.IMAGE_SIZES ? process.env.IMAGE_SIZES.split(/\s?,\s?/) : [200, 800, 1200],
   validRepos: process.env.VALID_REPOS ? process.env.VALID_REPOS.split(/\s?,\s?/) : [],
-  ignoreCommit: /^\[RESIZE-WEBHOOK]/
+  ignoreCommit: /^\[RESIZE-WEBHOOK]/,
+  bucketName: process.env.S3_BUCKET,
+  resize: require('../helpers/resize')
 }
 
 module.exports = function (options) {
@@ -61,32 +62,12 @@ module.exports = function (options) {
 
     debug('Detected new images:\n', files.join('\n'))
 
-    // Get the github raw url for each file
-    files = files.map(function (filename) {
-      return 'https://github.com/' + repo + '/raw/' + branch + '/' + filename
-    })
-
-    var resizeTask = {
-      retina: true,
-      images: files,
-      sizes: options.sizes,
-      postbackHeaders: {
-        'x-blitline-origin-repo': repo,
-        'x-blitline-origin-branch': branch
-      }
-    }
-
-    var resizer = options.resizer || blitelineResizer({
-      blitlineAppId: process.env.BLITLINE_APP_ID,
-      postbackUrl: process.env.HOSTNAME.replace(/^\/$/, '') + '/hooks/blitline',
-      s3Bucket: process.env.S3_BUCKET,
-      renamer: createRenameFn(repo, branch),
-      secret: process.env.BLITLINE_SECRET
-    })
-
-    resizer(resizeTask, function (err, data) {
-      if (err) return console.error('Error:', err.message)
-      debug('Blitline job response:', data)
+    // Resize each file
+    files.forEach(function (filename) {
+      options.resize(filename, repo, options.bucketName, {sizes: options.sizes, branch: branch, retina: true}, function (err) {
+        if (err) return console.error('Error:', err.message)
+        debug('Resized image:', filename)
+      })
     })
 
     // Close the connection
