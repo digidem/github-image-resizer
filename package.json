@@ -33,12 +33,12 @@
     "request": "^2.79.0",
     "run-parallel-limit": "^1.0.3",
     "run-series": "^1.1.4",
-    "sharp": "^0.24.1"
+    "sharp": "^0.24.1",
+    "tmp": "^0.1.0"
   },
   "devDependencies": {
     "body-parser": "^1.16.0",
     "buffer-equal": "1.0.0",
-    "dotenv": "^4.0.0",
     "image-size": "^0.8.3",
     "image-size-stream": "^1.1.0",
     "istanbul": "^0.4.5",
@@ -49,8 +49,7 @@
     "supertest": "^4.0.2",
     "tap-prettify": "0.0.2",
     "tap-spec": "^5.0.0",
-    "tape": "^4.6.3",
-    "tmp": "^0.1.0"
+    "tape": "^4.6.3"
   },
   "directories": {
     "test": "test"
