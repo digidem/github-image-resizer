@@ -64,7 +64,7 @@ module.exports = function (options) {
 
     // Resize each file
     files.forEach(function (filename) {
-      options.resize(filename, repo, options.bucketName, {sizes: options.sizes, branch: branch, retina: true}, function (err) {
+      options.resize(filename, repo, options.bucketName, { sizes: options.sizes, branch: branch, retina: true }, function (err) {
         if (err) return console.error('Error:', err.message)
         debug('Resized image:', filename)
       })

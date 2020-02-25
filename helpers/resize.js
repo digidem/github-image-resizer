@@ -59,7 +59,7 @@ module.exports = function (filename, repo, bucketName, options, cb) {
 
   var githubUrl = 'https://github.com/' + repo + '/raw/' + branch + '/' + filename
 
-  tmp.dir({unsafeCleanup: true, keep: true}, function (err, dirpath, cleanup) {
+  tmp.dir({ unsafeCleanup: true, keep: true }, function (err, dirpath, cleanup) {
     if (err) return cb(err)
     var subdir = path.parse(filename).dir
     mkdirp(path.join(dirpath, subdir), function (err) {
@@ -141,7 +141,7 @@ module.exports = function (filename, repo, bucketName, options, cb) {
           ContentType: 'image/' + info.format,
           CacheControl: 'public, max-age=31557600' // One Year
         }
-        s3.headObject({Key: params.Key, Bucket: params.Bucket}, function (err) {
+        s3.headObject({ Key: params.Key, Bucket: params.Bucket }, function (err) {
           if (!err) return done(new Error('File `' + params.Key + '` already exists'))
           debug('Uploading %s to S3', params.Key)
           s3.upload(params, _cb)

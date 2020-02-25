@@ -85,7 +85,7 @@ function teardown () {
     octo.repos('digidem-test', tempRepo).remove(t.end)
   })
   test('Delete files from s3 temp bucket', function (t) {
-    s3.listObjects({Bucket: bucket}, function (err, data) {
+    s3.listObjects({ Bucket: bucket }, function (err, data) {
       if (err) return t.end(err)
       var keys = data.Contents.map(function (v) {
         return v.Key
