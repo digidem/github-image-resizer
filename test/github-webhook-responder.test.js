@@ -130,7 +130,7 @@ test('Calls resizer with valid resize task', function (t) {
       t.equal(filename, filenames.pop(), 'resize called with correct filename')
       t.equal(repo, 'digidem-test/test', 'resize called with correct repo')
       t.equal(bucketName, 'digidem-test', 'resize called with correct bucker')
-      t.deepEqual(options, { sizes: options.sizes, branch: 'master' }, 'valid options')
+      t.deepEqual(options, { sizes: options.sizes, branch: 'master', retina: true }, 'valid options')
       t.equal(typeof cb, 'function', 'called resizer with callback')
     },
     sizes: [200, 800, 1200]

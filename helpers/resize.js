@@ -167,9 +167,10 @@ module.exports = function (filename, repo, bucketName, options, cb) {
 
   function resize (filepath, outFilepath, size, cb) {
     sharp(filepath)
-      .resize(size, size)
-      .max() // Preserving aspect ratio, resize the image to fit within `w` & `h`
-      .withoutEnlargement() // Do not enlarge images smaller than `w` & `h`
+      .resize(size, size, {
+        withoutEnlargement: true, // Do not enlarge images smaller than `w` & `h`
+        fit: 'inside' // Preserving aspect ratio, resize the image to fit within `w` & `h`
+      })
       .rotate() // Rotate image according to EXIF metadata (e.g. images from phones)
       .jpeg({
         quality: quality,

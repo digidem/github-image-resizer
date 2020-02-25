@@ -5,6 +5,7 @@ var Octokat = require('octokat')
 var dotenv = require('dotenv')
 var ngrok = require('ngrok')
 var AWS = require('aws-sdk')
+var sizeOf = require('image-size')
 
 dotenv.load()
 
@@ -114,17 +115,13 @@ test('New image on Github is resized', function (t) {
     st.skip('Waiting 30 seconds for everything to process')
     setTimeout(st.end, 30000)
   })
-  // Test is not reading updated version, caching issue? probably need to use oktokit to read it.
-  t.skip('Check resized image is on Github', function (st) {
-    var imageSizeStream = createImageSizeStream()
-
-    imageSizeStream.on('size', function (dimensions) {
+  t.test('Check resized image is on Github', function (st) {
+    octo.repos('digidem-test', tempRepo).contents('assets/test-image.jpg').fetch(function (err, info) {
+      t.error(err)
+      const dimensions = sizeOf(Buffer.from(info.content, 'base64'))
       st.equal(dimensions.width, 200, 'image now on Github is right size')
       st.end()
     })
-    const githubUrl = 'https://raw.githubusercontent.com/digidem-test/' + tempRepo + '/master/assets/test-image.jpg?' + Date.now()
-    console.log('Checking image:', githubUrl)
-    request(githubUrl, { headers: { 'Cache-Control': 'no-cache' } }).pipe(imageSizeStream)
   })
   t.test('Creates retina version of image', function (st) {
     var imageSizeStream = createImageSizeStream()
