@@ -42,7 +42,7 @@ function setup () {
   test('setup server', function (t) {
     server = app.listen(port, () => {
       ngrok.connect(port).then(url => {
-        hostname = process.env.HOSTNAME = url
+        hostname = url
         t.pass('Setup ngrok tunnel: ' + hostname)
         t.end()
       }).catch(err => {

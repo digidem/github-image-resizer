@@ -14,9 +14,6 @@
     "GITHUB_TOKEN": {
         "description": "A valid Github access token"
     },
-    "HOSTNAME": {
-        "description": "The hostname of this app e.g. https://THIS_APP_ID.herokuapp.com"
-    },
     "S3_BUCKET": {
         "description": "S3 Bucket ID."
     },
@@ -30,6 +27,12 @@
     "IMAGE_SIZES": {
         "description": "A comma-separated list of image sizes (width) to resize to",
         "value": "200,300,400,600,800,1000,1200,1600"
+    },
+    "AWS_ACCESS_KEY_ID": {
+        "description": "AWS Access key ID with access to S3_BUCKET"
+    },
+    "AWS_SECRET_ACCESS_KEY": {
+        "description": "AWS secret access key with access to S3_BUCKET"
     }
   }
 }

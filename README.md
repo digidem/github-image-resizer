@@ -24,7 +24,7 @@ Our solution is to convert each image to multiple sizes when we first upload it,
 
 3. [Create a webhook](https://developer.github.com/webhooks/creating/) on your Github repo. Payload Url should be `https://YOUR_APP_ID.herokuapp.com`, Content Type should be `application/json`, Secret should be the same as the `GITHUB_SECRET` environment variable on your Heroku App. You should just send the `push` event. Set your webhook to active.
 
-That's it (what do you mean "that's it"? that's a whole bunch of work!). When you make a push to Github that includes an image that matches `/.+\.(jpg|jpeg|png|tif|tiff|gif)$/` then you will get a bunch of different sized images in your S3 bucket, and the original will be replaced with a lo-res version in your repo.
+When you make a push to Github that includes an image that matches `/.+\.(jpg|jpeg|png|tif|tiff|gif)$/` then you will get a bunch of different sized images in your S3 bucket, and the original will be replaced with a lo-res version in your repo.
 
 ## Testing
 
