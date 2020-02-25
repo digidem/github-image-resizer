@@ -13,8 +13,8 @@ var argv = require('minimist')(process.argv.slice(2), {
     r: 'retina'
   },
   default: {
-    s: '200,300,400,600,800,1000,1200,1600',
-    r: true
+    sizes: '200,300,400,600,800,1000,1200,1600',
+    retina: true
   }
 })
 
