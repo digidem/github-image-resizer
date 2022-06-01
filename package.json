@@ -33,7 +33,7 @@
     "request": "^2.79.0",
     "run-parallel-limit": "^1.0.3",
     "run-series": "^1.1.4",
-    "sharp": "^0.24.1",
+    "sharp": "^0.30.5",
     "tmp": "^0.1.0"
   },
   "devDependencies": {
